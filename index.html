@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+  body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f0f0f0;
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background-image: url('https://img.freepik.com/fotos-premium/flechas-rojas-apuntando-centro_105589-135.jpg'); 
+    background-size: cover; 
+    background-repeat: no-repeat;
+    background-position: center;
+  }
+  
+  #container {
+    text-align: center;
+    padding: 40px;
+    border-radius: 20px;
+    background-color: rgba(255, 255, 255, 0.9);
+    box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.3);
+  }
+
+  h1 {
+    margin-top: 0;
+    color: #333;
+    font-size: 36px;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  
+  p {
+    font-size: 24px;
+    color: #555;
+    margin-top: 20px;
+  }
+
+  button {
+    background-color: #e63946;
+    color: white;
+    border: none;
+    padding: 15px 30px;
+    border-radius: 30px;
+    font-size: 20px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+
+  button:hover {
+    background-color: #a8dadc;
+    color: #222;
+  }
+
+  input[type="text"] {
+    padding: 10px;
+    font-size: 18px;
+    border: 2px solid #ddd;
+    border-radius: 10px;
+    margin-bottom: 10px;
+  }
+</style>
+<title>El árbol de la vida</title>
+</head>
+<body>
+<div id="container">
+  <h1 id="titulo">El árbol de la vida</h1>
+  <input type="text" id="nombre" placeholder="Ingresa tu nombre">
+  <p id="frase"></p>
+  <button id="generar" disabled>Generar frase</button>
+</div>
+
+<script>
+  const frases = [
+  "Ve a caminar",
+    "Sonreile a todos",
+    "Hace un album familiar",
+    "Conta las estrellas",
+    "Mima a los que amas",
+    "Llama a tus amigos por telefono",
+    "Deceile a alguien 'Te quiero mucho'",
+    "Habla con Dios",
+    "Se un niño otra vez",
+    "Salta a la cuerda",
+    "Borra la palabra rencor",
+    "Decí que si",
+    "Reite",
+    "Lee un libro",
+    "Pedi ayuda",
+    "Corre",
+    "Cumple tus promesas",
+    "Canta una canción",
+    "Anota los cumpleaños",
+    "Ayuda a un enfermo",
+    "Sali para divertirte",
+    "Cambia tu peinado",
+    "Se voluntario",
+    "Pensa",
+    "Devolve un favor",
+    "Termina un proyecto",
+    "Rompe un habito",
+    "Date un baño de espuma",
+    "Escribi una lista de cosas que haces bien",
+    "Visita a un hermano",
+    "Sueña despierto",
+    "Apaga el televisor y hable",
+    "Permitite equivocarte",
+    "Agradece a Dios por el sol",
+    "Acepta un cumplido",
+    "Perdonate",
+    "Deja que alguien te cuide",
+    "Mostra tu felicidad",
+    "Aprende algo que siempre deseaste",
+    "Tocate las puntas de los pies",
+    "Mira una flor con atencion",
+    "No digas 'no puedo' por un dia",
+    "Canta en la ducha",
+    "Vivi cada momento de la mano de Dios",
+    "Empeza una tradición familiar",
+    "Hace un picnic adentro",
+    "Por hoy no te preocupes",
+    "Practica el coraje en las pequeñas cosas",
+    "Ayuda a un anciano del barrio",
+    "Anima a un niño",
+    "Mira fotos viejas",
+    "Escucha a un amigo",
+    "Imagina las olas del mar",
+    "Juga con tu mascota",
+    "Permitite brillar",
+    "Date una palmada en la espalda",
+    "Grita por tu equipo favorito",
+    "Pinta un cuadro",
+    "Saluda a un vecino",
+    "Hace un pequeño cambio",
+    "Delega tareas",
+    "Hacelo sentir bienvenido a alguien",
+    "Permiti que alguien te ayude",
+    "Sabe que no estás solo",
+    "Hacete un regalo",
+    "Comprométete a vivir con pasión y fe"
+  ];
+
+  const nombreInput = document.getElementById("nombre");
+  const tituloElement = document.getElementById("titulo");
+  const fraseElement = document.getElementById("frase");
+  const generarButton = document.getElementById("generar");
+  let primeraVez = true;
+  let nombreIngresado = false;
+
+  nombreInput.addEventListener("change", () => {
+    const nombre = nombreInput.value;
+    if (nombre.trim() !== "") {
+      nombreIngresado = true;
+      tituloElement.textContent = `Hola ${nombre}`;
+      nombreInput.style.display = "none";
+      generarButton.disabled = false;
+    }
+  });
+
+  generarButton.addEventListener("click", () => {
+    if (nombreIngresado) {
+      if (primeraVez) {
+        tituloElement.textContent = `${nombreInput.value}`;
+        primeraVez = false;
+      }
+
+      const fraseAleatoria = generarFraseAleatoria();
+      fraseElement.style.display = "block";
+      fraseElement.textContent = fraseAleatoria;
+
+      if (!primeraVez) {
+        generarButton.textContent = "Generar nueva frase";
+      }
+    } else {
+      alert("Por favor, ingresa tu nombre antes de generar una frase.");
+    }
+  });
+
+  function generarFraseAleatoria() {
+    const numFrases = frases.length;
+    const indiceAleatorio = Math.floor(Math.random() * numFrases);
+    return frases[indiceAleatorio];
+  }
+</script>
+</body>
+</html>
